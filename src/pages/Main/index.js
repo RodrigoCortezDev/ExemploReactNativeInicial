@@ -1,15 +1,22 @@
-import {RectButton} from 'react-native-gesture-handler';
 import React from 'react';
-import { View, Text } from 'react-native';
-
+// import { Icon } from 'react-native-vector-icons/MaterialIcons';
+import { Text } from 'react-native';
+import { Container, Form, Input, SubmitButton } from './styles';
 
 export default function Main({ navigation }) {
     return (
-         <View>
-            <Text>Main</Text>
-            <RectButton key="teste" onPress={() => navigation.navigate('Users')}>
-                <Text>Clique aqui</Text>
-            </RectButton>
-        </View>
+        <Container>
+            <Form>
+                <Input
+                    autoCorrect={false}
+                    autoCapitalize="none"
+                    placeholder="Adicionar Usuário"
+                />
+                <SubmitButton color="#fff" onPress={() => navigation.navigate('Users') }>
+                    <Text>OK</Text>
+                    {/* <Icon name="add" size={20} color="#fff"/> */}
+                </SubmitButton>
+            </Form>
+        </Container>
     );
 }
