@@ -29,7 +29,7 @@ function Routes() {
                     }}
                 />
                 <Stack.Screen
-                    name="Usuários"
+                    name="Users"
                     component={User}
                     options={{
                         title: 'Pagina de Usuários',
