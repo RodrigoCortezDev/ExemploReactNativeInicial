@@ -1,0 +1,17 @@
+{
+  "name": "Modulo06Novo",
+  "displayName": "Modulo06Novo",
+  "expo": {
+    "name": "Modulo06Novo",
+    "slug": "Modulo06Novo",
+    "version": "1.0.0",
+    "platforms": [
+      "ios",
+      "android",
+      "web"
+    ],
+    "assetBundlePatterns": [
+      "**/*"
+    ]
+  }
+}
