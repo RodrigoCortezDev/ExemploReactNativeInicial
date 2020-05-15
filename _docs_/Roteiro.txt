@@ -1,0 +1,22 @@
+Para rodar a aplicação:
+    ->> Iniciar o emulador de Android
+    -> react-native run-androi (nas proximas vezes só abrir o APK no emulador)
+
+2 - Ferramentas de Dubbug, facilitador de Logs
+    ->> Instalar o Reactotron, e no projeto rodar o comando abaixo
+    -> yarn add reactotron-react-native
+    ->> Lembrar de fazer o import do arquivo config no app.js
+
+3 - Adicionando a funcionalidade de rotas (https://reactnavigation.org/)
+    ->> Incluir o arquivo routes.js
+    -> yarn add @react-navigation/native (rodar outros comandos verificando no site)
+
+4 - Styled Components on React
+    -> yarn add styled-components
+
+5 - Usando biblioteca de icones
+    -> yarn add react-native-vector-icons
+    ->> Acessar o site: https://github.com/oblador/react-native-vector-icons, copiar o trecho referente ao android e editar o build.gradle(dentro da pasta app)
+
+6 - Instalando o Axios
+    -> yarn add axios
