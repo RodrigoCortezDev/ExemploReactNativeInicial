@@ -1,7 +1,7 @@
 import React from 'react';
-import { Icon } from 'react-native-vector-icons/MaterialIcons';
 import { Text } from 'react-native';
 import { Container, Form, Input, SubmitButton } from './styles';
+import { Icon } from 'react-native-vector-icons/MaterialIcons';
 
 export default class Main extends React.Component {
 	state = {};
