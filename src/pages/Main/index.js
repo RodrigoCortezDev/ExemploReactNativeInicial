@@ -62,7 +62,16 @@ export default class Main extends React.Component {
 		} catch (error) {
 			this.setState({ newUser: '', loading: false });
 		}
+
 		Keyboard.dismiss();
+	};
+
+	//Realiza a navegação entre abas
+	handleNavigateUser = (user) => {
+		const { navigation } = this.props;
+		if (navigation) {
+			navigation.navigate('Users', { user });
+		}
 	};
 
 	//Renderização da tela
@@ -81,7 +90,7 @@ export default class Main extends React.Component {
 						onSubmitEditing={this.handleAddUser}
 						value={newUser}
 					/>
-					<SubmitButton carregando={loading} rippleColor="#fff" onPress={this.handleAddUser}>
+					<SubmitButton enabled={!loading} carregando={loading} rippleColor="#fff" onPress={this.handleAddUser}>
 						{loading ? <ActivityIndicator color="#fff" /> : <SubmitButtonText> + </SubmitButtonText>}
 					</SubmitButton>
 
@@ -98,7 +107,7 @@ export default class Main extends React.Component {
 							<Avatar source={{ uri: item.avatar }} />
 							<Name>{item.name}</Name>
 							<Bio>{item.bio}</Bio>
-							<ProfileButton onPress={() => this.props.navigation.navigate('Users')}>
+							<ProfileButton onPress={() => this.handleNavigateUser(item)}>
 								<ProfileButtonText>Ver Perfil</ProfileButtonText>
 							</ProfileButton>
 						</User>

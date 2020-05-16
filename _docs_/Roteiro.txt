@@ -22,4 +22,6 @@ Para rodar a aplicação:
     -> yarn add axios
 
 7 - Para salvar no banco do celular
+    * Nesta etapa precisou instalar o NDK no Android Studio e rodar o "yarn android"
     -> yarn add @react-native-community/async-storage
+    
