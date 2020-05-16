@@ -20,3 +20,6 @@ Para rodar a aplicação:
 
 6 - Instalando o Axios
     -> yarn add axios
+
+7 - Para salvar no banco do celular
+    -> yarn add @react-native-community/async-storage

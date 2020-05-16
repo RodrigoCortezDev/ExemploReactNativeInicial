@@ -1,6 +1,20 @@
 import React from 'react';
-import { Text, Alert, Keyboard } from 'react-native';
-import { Container, Form, Input, SubmitButton } from './styles';
+import { Keyboard, ActivityIndicator } from 'react-native';
+import AsyncStorage from '@react-native-community/async-storage';
+import {
+	Container,
+	Form,
+	Input,
+	SubmitButton,
+	SubmitButtonText,
+	List,
+	User,
+	Avatar,
+	Name,
+	Bio,
+	ProfileButton,
+	ProfileButtonText,
+} from './styles';
 import api from '../../services/api';
 
 // import { Icon } from 'react-native-vector-icons/MaterialIcons';
@@ -10,35 +24,53 @@ export default class Main extends React.Component {
 	state = {
 		newUser: '',
 		users: [],
+		loading: false,
 	};
 
 	//Ao abrir o app
-	componentDidMount() {}
+	async componentDidMount() {
+		const users = await AsyncStorage.getItem('users');
+		if (users) {
+			this.setState({ users: JSON.parse(users) });
+		}
+	}
+
+	//Ao alterar o state
+	async componentDidUpdate(_, prevState) {
+		const { users } = this.state;
+		if (prevState.users !== users) {
+			await AsyncStorage.setItem('users', JSON.stringify(users));
+		}
+	}
 
 	//Adicionar o usuário
 	handleAddUser = async () => {
 		const { users, newUser } = this.state;
 
-		const response = await api.get(`/users/${newUser}`);
+		try {
+			this.setState({ loading: true });
+			const response = await api.get(`/users/${newUser}`);
 
-		const data = {
-			name: response.data.name,
-			login: response.data.login,
-			bio: response.data.bio,
-			avatar: response.data.avatar_url,
-		};
+			const data = {
+				name: response.data.name,
+				login: response.data.login,
+				bio: response.data.bio,
+				avatar: response.data.avatar_url,
+			};
 
-		this.setState({ users: [...users, data], newUser: '' });
+			this.setState({ users: [...users, data], newUser: '', loading: false });
+		} catch (error) {
+			this.setState({ newUser: '', loading: false });
+		}
 		Keyboard.dismiss();
 	};
 
 	//Renderização da tela
 	render() {
-		const { users, newUser } = this.state;
+		const { users, newUser, loading } = this.state;
 
 		return (
 			<Container>
-				{/* <Icon name="add" size={20} color="#fff" /> */}
 				<Form>
 					<Input
 						autoCorrect={false}
@@ -49,14 +81,29 @@ export default class Main extends React.Component {
 						onSubmitEditing={this.handleAddUser}
 						value={newUser}
 					/>
-					<SubmitButton rippleColor="#fff" onPress={this.handleAddUser}>
-						<Text>Incuir</Text>
+					<SubmitButton carregando={loading} rippleColor="#fff" onPress={this.handleAddUser}>
+						{loading ? <ActivityIndicator color="#fff" /> : <SubmitButtonText> + </SubmitButtonText>}
 					</SubmitButton>
 
 					{/* <SubmitButton color="#fff" onPress={() => this.props.navigation.navigate('Users')}>
-						<Text>OK</Text>
+						<Icon name="add" size={20} color="#fff" />
 					</SubmitButton> */}
 				</Form>
+
+				<List
+					data={users}
+					keyExtractor={(user) => user.login} //{(user, login) => login.toString()}
+					renderItem={({ item }) => (
+						<User>
+							<Avatar source={{ uri: item.avatar }} />
+							<Name>{item.name}</Name>
+							<Bio>{item.bio}</Bio>
+							<ProfileButton onPress={() => this.props.navigation.navigate('Users')}>
+								<ProfileButtonText>Ver Perfil</ProfileButtonText>
+							</ProfileButton>
+						</User>
+					)}
+				/>
 			</Container>
 		);
 	}
